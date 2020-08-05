@@ -2,17 +2,21 @@
 #define BOARD_VIEW_H
 
 #include "board.hpp"
+#include "observer.hpp"
 
-class BoardView
+using namespace std;
+
+class BoardView : public Observer
 {
-
+  Board* board_;
 public: 
-  BoardView() {};
-  BoardView(Board &board);
-  // BoardView &operator = (const BoardView &other);
+  BoardView();
+  BoardView(Board* board);
+  BoardView& operator= (const BoardView& other);
   ~BoardView();
 
   void PrintBoard();
+  void Notify();
 };
 
 #endif

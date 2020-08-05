@@ -1,7 +1,11 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-class Board
+#include "subject.hpp"
+
+using namespace std;
+
+class Board : public Subject
 {
   int game_size_;
   int total_bomb_count_;
