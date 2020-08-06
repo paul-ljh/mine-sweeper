@@ -37,6 +37,7 @@ int main(int argc, char const *argv[])
       size >> game_size_int;
       cout << "You have chosen a board of size " << game_size_int << endl;
       // TODO: validate game_size_int
+      // TODO: set a constraint on game_size_int
 
       has_game_started = true;
       board = Board(game_size_int);

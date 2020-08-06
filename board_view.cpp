@@ -22,11 +22,10 @@ BoardView::~BoardView()
 
 void BoardView::PrintBoard()
 {
-  cout << board_->game_size() << endl;
+  board_->PrintBoard();
 };
 
 void BoardView::Notify()
 {
-  cout << "attached" << endl;
   PrintBoard();
 };
