@@ -38,9 +38,11 @@ int main(int argc, char const *argv[])
       cout << "You have chosen a board of size " << game_size_int << endl;
       // TODO: validate game_size_int
       // TODO: set a constraint on game_size_int
-
       has_game_started = true;
       board = Board(game_size_int);
+      cout << board.game_size() << endl;
+      board.PrintBoard();
+      
       view = BoardView(&board);
       board.Attach(&view);
       board.NotifyObservers();

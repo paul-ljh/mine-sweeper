@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "observer.hpp"
+
 using namespace std;
 
 class Subject

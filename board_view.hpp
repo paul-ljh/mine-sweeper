@@ -12,11 +12,12 @@ class BoardView : public Observer
 public: 
   BoardView();
   BoardView(Board* board);
+  BoardView(const BoardView& other);
   BoardView& operator= (const BoardView& other);
   ~BoardView();
 
   void PrintBoard();
-  void Notify();
+  void Notify() override;
 };
 
 #endif

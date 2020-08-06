@@ -3,11 +3,12 @@
 
 using namespace std;
 
-BoardView::BoardView(): board_(nullptr)
-{};
+BoardView::BoardView(): board_(nullptr) {};
 
-BoardView::BoardView(Board* board): board_(board)
-{};
+BoardView::BoardView(Board* board): board_(board) {};
+
+// BoardView::BoardView(const BoardView& other):
+//   board_(new Board(*(other.board_))) {};
 
 BoardView& BoardView::operator= (const BoardView& other)
 {
