@@ -18,13 +18,11 @@ Board::Board(const Board& other)
   : game_size_(other.game_size_),
     total_bomb_count_(other.total_bomb_count_),
     remaining_bomb_count_(other.remaining_bomb_count_),
-    top_bottom_border_(other.top_bottom_border_)
-{
-  cout << "copy constructor" << endl;
+    top_bottom_border_(other.top_bottom_border_) {
+  cout << "Board copy constructor" << endl;
 };
 
-void Board::Swap(Board& other)
-{
+void Board::Swap(Board& other) {
   using std::swap;
   swap(game_size_, other.game_size_);
   swap(total_bomb_count_, other.total_bomb_count_);
@@ -32,21 +30,18 @@ void Board::Swap(Board& other)
   swap(top_bottom_border_, other.top_bottom_border_);
 };
 
-Board& Board::operator= (const Board& other)
-{
-  cout << "copy assignment" << endl;
+Board& Board::operator= (const Board& other) {
+  cout << "Board copy assignment" << endl;
   Board temp(other);
   Swap(temp);
   return *this;
 };
 
-void Board::PrintBoard() const 
-{
+void Board::PrintBoard() const {
   PrintBorders();
 };
 
-void Board::PrintBorders() const 
-{
+void Board::PrintBorders() const {
   // string top_bottom_border(game_size_ * 2, horizontal_border_segment_);
   // Top
   cout << top_bottom_border_ << endl;
@@ -54,8 +49,7 @@ void Board::PrintBorders() const
   cout << top_bottom_border_ << endl;
 };
 
-void Board::PrintCells() const
-{};
+void Board::PrintCells() const {};
 
 int Board::game_size() const {
   return game_size_;

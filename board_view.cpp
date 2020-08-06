@@ -7,26 +7,22 @@ BoardView::BoardView(): board_(nullptr) {};
 
 BoardView::BoardView(Board* board): board_(board) {};
 
-// BoardView::BoardView(const BoardView& other):
-//   board_(new Board(*(other.board_))) {};
+BoardView::BoardView(const BoardView& other):
+  board_(other.board_) {};
 
-BoardView& BoardView::operator= (const BoardView& other)
-{
+BoardView& BoardView::operator= (const BoardView& other) {
   using std::swap;
   BoardView temp(other);
   swap(board_, temp.board_);
   return *this;
 };
 
-BoardView::~BoardView()
-{};
+BoardView::~BoardView() {};
 
-void BoardView::PrintBoard()
-{
+void BoardView::PrintBoard() {
   board_->PrintBoard();
 };
 
-void BoardView::Notify()
-{
+void BoardView::Notify() {
   PrintBoard();
 };
