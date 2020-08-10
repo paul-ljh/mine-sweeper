@@ -2,7 +2,7 @@
 
 const string Controller::kWelcomeMessage =
   "Welcome to Mine Sweeper 2020 Corona Version\n"
-  "Type 'cheers' to continue\n";
+  "Type 'cheers' to continue or restart the game anytime\n";
 
 const string Controller::kGameSizePrompt = "Type a positive integer to officially start the game\n";
 
@@ -23,6 +23,7 @@ void Controller::DispatchCommand(string command) {
   // TODO: consider a map(string -> enum), then enum -> action via a switch statement
   if (command.compare("cheers") == 0) {
     LoadGame();
+    set_has_game_started(false);
   } else /* game size */{
     // TODO: validate game_size_int
     // TODO: set a constraint on game_size_int

@@ -16,12 +16,13 @@ class Board : public Subject
   int total_bomb_count_;
   int remaining_bomb_count_;
   string top_bottom_border_;
-  // vector<vector<Cell*>> cells_;
+  // Cell cells_[];
+  vector<Cell> cells_;
 
   static const char kHorizontalBorderSegment;
   static const char kVerticalBorderSegment;
 
-  void PrintBorders() const;
+  // void PrintBorders() const;
   void PrintCells() const;
   void Swap(Board& other);
 
@@ -33,6 +34,7 @@ public:
   ~Board();
 
   void PrintBoard() const;
+
   int game_size() const;
 };
 

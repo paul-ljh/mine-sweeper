@@ -7,8 +7,8 @@
 
 using namespace std;
 
-class Subject
-{
+class Subject {
+  // TODO: memory leak here due to absence of destructor
   vector<Observer*> observers_;
 public: 
   void Attach(Observer* o);
