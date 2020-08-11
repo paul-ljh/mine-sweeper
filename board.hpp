@@ -12,7 +12,8 @@ using namespace std;
 
 class Board : public Subject
 {
-  int game_size_;
+  int board_size_;
+  int cells_count_;
   int total_bomb_count_;
   int remaining_bomb_count_;
   string top_bottom_border_;
@@ -23,19 +24,20 @@ class Board : public Subject
   static const char kVerticalBorderSegment;
 
   // void PrintBorders() const;
-  void PrintCells() const;
+  void PrintCells();
   void Swap(Board& other);
+  void InitializeAllCells();
 
 public:
   Board();
-  Board(int game_size);
+  Board(int board_size);
   Board(const Board& other);
   Board& operator= (const Board& other);
   ~Board();
 
-  void PrintBoard() const;
+  void PrintBoard();
 
-  int game_size() const;
+  int board_size() const;
 };
 
 #endif

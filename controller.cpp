@@ -1,7 +1,7 @@
 #include "controller.hpp"
 
 const string Controller::kWelcomeMessage =
-  "Welcome to Mine Sweeper 2020 Corona Version\n"
+  "Welcome to Minesweeper 2020 Corona Version\n"
   "Type 'cheers' to continue or restart the game anytime\n";
 
 const string Controller::kGameSizePrompt = "Type a positive integer to officially start the game\n";
