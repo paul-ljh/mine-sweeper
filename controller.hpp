@@ -16,8 +16,9 @@ class Controller {
   BoardView* board_view_;
 
   static const string kWelcomeMessage;
-  static const string kGameSizePrompt;
-  static const string kGameSizeConfirmation;
+  static const string kGameDifficultyLevelPrompt;
+  static const string kGameDifficultyLevelConfirmation;
+  static const string kGameLevelOptions[3];
 
 public:
   Controller();
@@ -26,7 +27,7 @@ public:
   void DispatchCommand(string command);
   void WelcomePrompt();
   void LoadGame();
-  void StartGame(int game_size);
+  void StartGame(string difficulty_level);
   void PrintWelcomeMessage();
 
   bool has_game_started() const;

@@ -4,9 +4,15 @@ const string Controller::kWelcomeMessage =
   "Welcome to Minesweeper 2020 Corona Version\n"
   "Type 'cheers' to continue or restart the game anytime\n";
 
-const string Controller::kGameSizePrompt = "Type a positive integer to officially start the game\n";
+const string Controller::kGameDifficultyLevelPrompt =
+  "Choose a difficulty level:\n"
+  "l: Low\n"
+  "m: Intermidiate\n"
+  "h: High\n";
 
-const string Controller::kGameSizeConfirmation = "You have chosen a board of size ";
+const string Controller::kGameDifficultyLevelConfirmation = "You have chosen a game of level ";
+
+const string Controller::kGameLevelOptions[3] {"l", "m", "h"};
 
 Controller::Controller()
   : has_game_started_(false),
@@ -24,19 +30,22 @@ void Controller::DispatchCommand(string command) {
   if (command.compare("cheers") == 0) {
     LoadGame();
     set_has_game_started(false);
-  } else /* game size */{
-    // TODO: validate game_size_int
-    // TODO: set a constraint on game_size_int
-    stringstream game_size(command);
-    int game_size_int;
-    game_size >> game_size_int;
-    cout << kGameSizeConfirmation << game_size_int << endl;
-
+  } else if (find(kGameLevelOptions, kGameLevelOptions + 3, command) != kGameLevelOptions + 3) {
+    cout << kGameDifficultyLevelConfirmation << command << endl << endl;
     set_has_game_started(true);
-    StartGame(game_size_int);
+    StartGame(command);
   }
-  // restart game (go back to start cmd)
+  // else /* game size */{
+  //   // TODO: validate game_size_int
+  //   // TODO: set a constraint on game_size_int
+  //   stringstream game_size(command);
+  //   int game_size_int;
+  //   game_size >> game_size_int;
+  //   cout << kGameSizeConfirmation << game_size_int << endl;
 
+  //   set_has_game_started(true);
+  //   StartGame(game_size_int);
+  // }
   // refresh game (with same size n)
 
   // quit game
@@ -50,11 +59,11 @@ void Controller::WelcomePrompt() {
 };
 
 void Controller::LoadGame() {
-  cout << kGameSizePrompt;
+  cout << kGameDifficultyLevelPrompt;
 };
 
-void Controller::StartGame(int game_size) {
-  board_ = new Board(game_size);
+void Controller::StartGame(string difficulty_level) {
+  board_ = new Board(difficulty_level);
   board_view_ = new BoardView(board_);
 
   // TODO: re-consider Subject/Observer pattern since MVC does the trick
