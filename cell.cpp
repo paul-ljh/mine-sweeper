@@ -1,36 +1,53 @@
 #include "cell.hpp"
 
-Cell::Cell(): is_exposed_(false), is_flagged_(false), is_mine_(false) {};
+Cell::Cell(): is_exposed_(false), is_flagged_(false), is_mine_(false), integer_clue_(0), index(-1) {};
 
 Cell::~Cell() {};
 
 Cell::Cell(const Cell& other):
+  Subject(other),
   is_exposed_(other.is_exposed_),
   is_flagged_(other.is_flagged_),
-  is_mine_(other.is_mine_) {}
+  is_mine_(other.is_mine_),
+  integer_clue_(other.integer_clue_) {}
 
 Cell& Cell::operator=(const Cell& other) {
   Cell temp(other);
-  swap(temp);
+  Swap(temp);
   return *this;
 }
 
-void Cell::swap(Cell &other) {
+void Cell::Swap(Cell &other) {
   using std::swap;
   swap(is_exposed_, other.is_exposed_);
   swap(is_flagged_, other.is_flagged_);
   swap(is_mine_, other.is_mine_);
+  swap(integer_clue_, other.integer_clue_);
 }
 
 // TODO: more logic in this later
 void Cell::PrintCell() {
   if (is_mine_) {
     cout << "*";
-  } else {
+  } else if (integer_clue_ == 0) {
     cout << " ";
+  } else if (integer_clue_ > 0) {
+    cout << integer_clue_;
   }
 }
 
-void Cell::set_is_mine(bool new_val) {
-  is_mine_ = new_val;
+void Cell::Notify() {
+  if (!is_mine_) {
+    ++integer_clue_;
+  }
+}
+
+void Cell::PrintIndex() {
+  cout << index << ", ";
+}
+
+void Cell::PlantMine() {
+  is_mine_ = true;
+  integer_clue_ = -1;
+  NotifyObservers();
 };

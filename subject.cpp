@@ -1,7 +1,4 @@
-#include <iostream>
-
 #include "subject.hpp"
-using namespace std;
 
 void Subject::Attach(Observer* o) {
   observers_.push_back(o);
@@ -16,4 +13,3 @@ void Subject::NotifyObservers() {
     o->Notify();
   }
 }
-

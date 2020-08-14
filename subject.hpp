@@ -2,15 +2,18 @@
 #define SUBJECT_H
 
 #include <vector>
+#include <iostream>
 
 #include "observer.hpp"
 
 using namespace std;
 
 class Subject {
-  // TODO: memory leak here due to absence of destructor
+
+public:
+  // TODO: move back under private
   vector<Observer*> observers_;
-public: 
+
   void Attach(Observer* o);
   void Detach(Observer* o);
   void NotifyObservers();

@@ -4,29 +4,32 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <stdlib.h> 
 
 #include "subject.hpp"
 #include "cell.hpp"
 
 using namespace std;
 
-class Board : public Subject
-{
+class Board : public Subject {
   int board_size_;
   int cells_count_;
   int total_bomb_count_;
   int remaining_bomb_count_;
   string top_bottom_border_;
-  // Cell cells_[];
-  vector<Cell> cells_;
+  vector<Cell*> cells_;
 
+  // const int neighbour_index_differences_[8];
   static const char kHorizontalBorderSegment;
   static const char kVerticalBorderSegment;
 
   // void PrintBorders() const;
   void PrintCells();
   void Swap(Board& other);
-  void InitializeAllCells();
+  void GenerateMines();
+  void GenerateClues();
+  void SetUpCellsRelations();
+  bool ValidateNeighbourIndex(int self_index, int neighbour_index);
 
 public:
   Board();

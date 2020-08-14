@@ -3,24 +3,32 @@
 
 #include <iostream>
 
+#include "observer.hpp"
+#include "subject.hpp"
+
 using namespace std;
 
-class Cell
-{
+class Cell : public Observer, public Subject {
   bool is_exposed_;
   bool is_flagged_;
   bool is_mine_;
+  int integer_clue_;
 
-  void swap(Cell &other);
+  void Swap(Cell &other);
 
 public:
   Cell();
   ~Cell();
   Cell(const Cell& other);
   Cell& operator=(const Cell& other);
+  
+  // TODO: remove all index related code, it's here for debugging purpose
+  int index;
 
+  void PlantMine();
   void PrintCell();
-  void set_is_mine(bool new_val);
+  void PrintIndex() override;
+  void Notify() override;
 };
 
 #endif
