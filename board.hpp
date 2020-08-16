@@ -12,7 +12,7 @@
 
 using namespace std;
 
-class Board : public Subject {
+class Board {
   string difficulty_level_;
   int board_size_;
   int cells_count_;
@@ -27,11 +27,8 @@ class Board : public Subject {
   static const char kVerticalBorderSegment;
   static const unordered_map<string, int> kGameLevelToSize;
 
-  // void PrintBorders() const;
   void PrintCells();
-  void Swap(Board& other);
   void GenerateMines();
-  void GenerateClues();
   void SetUpCellsRelations();
   bool ValidateNeighbourIndex(int self_index, int neighbour_index);
 
@@ -42,7 +39,10 @@ public:
   Board& operator= (const Board& other);
   ~Board();
 
+  void Swap(Board& other);
   void PrintBoard();
+  bool VerifySingleCoordinate(char coordinate);
+  bool ExecuteCommand(char command, char x_coordinate, char y_coordinate);
 
   int board_size() const;
 };

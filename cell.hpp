@@ -13,9 +13,6 @@ class Cell : public Observer, public Subject {
   bool is_flagged_;
   bool is_mine_;
   int integer_clue_;
-
-  void Swap(Cell &other);
-
 public:
   Cell();
   ~Cell();
@@ -25,8 +22,11 @@ public:
   // TODO: remove all index related code, it's here for debugging purpose
   int index;
 
+  void Swap(Cell &other);
   void PlantMine();
   void PrintCell();
+  void Expose();
+  bool ExecuteCommand(char command);
   void PrintIndex() override;
   void Notify() override;
 };

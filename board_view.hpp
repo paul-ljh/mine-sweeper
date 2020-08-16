@@ -4,12 +4,16 @@
 #include <iostream>
 
 #include "board.hpp"
-#include "observer.hpp"
 
 using namespace std;
 
-class BoardView : public Observer {
+class BoardView {
   Board* board_;
+
+  static const string kActionPrompt;
+  static const string kXCoordinatePrompt;
+  static const string kYCoordinatePrompt;
+  static const string kGameDifficultyLevelPrompt;
 public: 
   BoardView();
   BoardView(Board* board);
@@ -17,9 +21,11 @@ public:
   BoardView& operator= (const BoardView& other);
   ~BoardView();
 
-  void PrintBoard();
-  void Notify() override;
-  void PrintIndex() override {};
+  void PrintGame();
+  void ActionPrompt();
+  void GameDifficultyLevelPrompt();
+  void XCoordinatePrompt();
+  void YCoordinatePrompt();
 };
 
 #endif

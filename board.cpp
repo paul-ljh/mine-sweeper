@@ -171,7 +171,17 @@ void Board::GenerateMines() {
   // }
 };
 
-void Board::GenerateClues() {}
+bool Board::VerifySingleCoordinate(char coordinate) {
+  return int(coordinate) >= int('a') and int(coordinate) < int('a' + board_size_);
+};
+
+bool Board::ExecuteCommand(char command, char x_coordinate, char y_coordinate) {
+  int x, y, index;
+  x = int(x_coordinate) - int('a');
+  y = int(y_coordinate) - int('a');
+  index = y * board_size_ + x;
+  return cells_[index]->ExecuteCommand(command);
+};
 
 int Board::board_size() const {
   return board_size_;
