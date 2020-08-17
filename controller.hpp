@@ -33,6 +33,7 @@ public:
   void StartGame(string difficulty_level);
   void PrintWelcomeMessage();
   void CoordinatePrompt();
+  void ActionResultDispatcher(ActionResultEnum result);
 
   bool has_game_started() const;
   void set_has_game_started(bool new_val);

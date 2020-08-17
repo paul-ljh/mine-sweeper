@@ -66,12 +66,13 @@ void Controller::DispatchCommand(string command) {
             CoordinatePrompt();
           } else {
             y_coordinate_ = command_char;
-            board_->ExecuteCommand(action_, x_coordinate_, y_coordinate_);
-            board_view_->PrintGame();
-            board_view_->ActionPrompt();
-            action_ = '\0';
-            x_coordinate_ = '\0';
-            y_coordinate_ = '\0';
+            ActionResultEnum result = board_->ExecuteCommand(action_, x_coordinate_, y_coordinate_);
+            ActionResultDispatcher(result);
+            // board_view_->PrintGame();
+            // board_view_->ActionPrompt();
+            // action_ = '\0';
+            // x_coordinate_ = '\0';
+            // y_coordinate_ = '\0';
           }
         } else {
           cout << "Choose a valid coordinate Merlin's Beard!\n" << endl;
@@ -87,6 +88,25 @@ void Controller::DispatchCommand(string command) {
   /* action cmd with coordinate
   flag, unflag, expose */    
 };
+
+void Controller::ActionResultDispatcher(ActionResultEnum result) {
+  switch (result) {
+    case ActionResultEnum::kRepeat:
+      cout << "You have swept this one already mate!" << endl;
+
+    case ActionResultEnum::kGameOver:
+      cout << "GAME OVER!\nNice work my dear chap!" << endl;
+      break;
+    
+    default:
+      board_view_->PrintGame();
+      board_view_->ActionPrompt();
+      action_ = '\0';
+      x_coordinate_ = '\0';
+      y_coordinate_ = '\0';
+      break;
+  }
+}
 
 void Controller::WelcomePrompt() {
   cout << kWelcomeMessage;

@@ -25,37 +25,38 @@ void Cell::Swap(Cell &other) {
 };
 
 void Cell::PrintCell() {
-  if (is_exposed_) {
-    cout << integer_clue_;
-  } else if (is_flagged_) {
-    cout << "f";
-  } else {
-    cout << " ";
-  }
-  // if (is_mine_) {
-  //   cout << "*";
-  // } else if (integer_clue_ == 0) {
-  //   cout << " ";
-  // } else if (integer_clue_ > 0) {
+  // if (is_exposed_) {
   //   cout << integer_clue_;
+  // } else if (is_flagged_) {
+  //   cout << "f";
+  // } else {
+  //   cout << " ";
   // }
+  if (is_flagged_) {
+    cout << "F";
+  } else if (is_mine_) {
+    cout << "*";
+  } else {
+    cout << integer_clue_;
+  }
 };
 
-bool Cell::ExecuteCommand(char command) {
+ActionResultEnum Cell::ExecuteCommand(char command) {
   if (is_exposed_ == true) {
-    cout << "You have already swept this one mate" << endl;
+    return ActionResultEnum::kRepeat;
   } else {
     if (command == 'e') {
       if (is_mine_ == true) {
-        // TODO: gameover
+        return ActionResultEnum::kGameOver;
       } else {
         Expose();
+        return ActionResultEnum::kContinue;
       }
     } else /* flag action */ {
       is_flagged_ = !is_flagged_;
+      return ActionResultEnum::kFlag;
     }
   }
-  return true;
 };
 
 void Cell::Expose() {

@@ -5,6 +5,7 @@
 
 #include "observer.hpp"
 #include "subject.hpp"
+#include "action_result_enum.hpp"
 
 using namespace std;
 
@@ -26,7 +27,7 @@ public:
   void PlantMine();
   void PrintCell();
   void Expose();
-  bool ExecuteCommand(char command);
+  ActionResultEnum ExecuteCommand(char command);
   void PrintIndex() override;
   void Notify() override;
 };

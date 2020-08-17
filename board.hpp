@@ -42,7 +42,7 @@ public:
   void Swap(Board& other);
   void PrintBoard();
   bool VerifySingleCoordinate(char coordinate);
-  bool ExecuteCommand(char command, char x_coordinate, char y_coordinate);
+  ActionResultEnum ExecuteCommand(char command, char x_coordinate, char y_coordinate);
 
   int board_size() const;
 };
