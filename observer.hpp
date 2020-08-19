@@ -1,13 +1,16 @@
 #ifndef OBSERVER_H
 #define OBSERVER_H
 
-#include <vector>
+#include <iostream>
 using namespace std;
 
+template<class T>
 class Observer {
-public: 
-  virtual void Notify() = 0;
-  virtual void PrintIndex() = 0;
+public:
+  Observer() {};
+  virtual ~Observer() {};
+  virtual void Notify(T *subject) = 0;
+  // virtual void PrintIndex() = 0;
 };
 
 #endif

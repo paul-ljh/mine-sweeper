@@ -1,6 +1,14 @@
 #include "cell.hpp"
 
-Cell::Cell(): is_exposed_(false), is_flagged_(false), is_mine_(false), integer_clue_(0), index(-1) {};
+enum class Cell::NotifyActionEnum {kPlantMine, kExpose};
+
+Cell::Cell():
+  is_exposed_(false),
+  is_flagged_(false),
+  is_mine_(false),
+  integer_clue_(0),
+  notify_action_(NotifyActionEnum::kPlantMine),
+  index(-1) {};
 
 Cell::~Cell() {};
 
@@ -25,20 +33,20 @@ void Cell::Swap(Cell &other) {
 };
 
 void Cell::PrintCell() {
-  // if (is_exposed_) {
-  //   cout << integer_clue_;
-  // } else if (is_flagged_) {
-  //   cout << "f";
-  // } else {
-  //   cout << " ";
-  // }
-  if (is_flagged_) {
-    cout << "F";
-  } else if (is_mine_) {
-    cout << "*";
-  } else {
+  if (is_exposed_) {
     cout << integer_clue_;
+  } else if (is_flagged_) {
+    cout << "f";
+  } else {
+    cout << " ";
   }
+  // if (is_flagged_) {
+  //   cout << "F";
+  // } else if (is_mine_) {
+  //   cout << "*";
+  // } else {
+  //   cout << integer_clue_;
+  // }
 };
 
 ActionResultEnum Cell::ExecuteCommand(char command) {
@@ -60,21 +68,37 @@ ActionResultEnum Cell::ExecuteCommand(char command) {
 };
 
 void Cell::Expose() {
-  // TODO
-};
-
-void Cell::Notify() {
-  if (!is_mine_) {
-    ++integer_clue_;
+  if (!is_exposed_) {
+    is_flagged_ = false;
+    is_exposed_ = true;
+    if (integer_clue_ == 0) {
+      notify_action_ = NotifyActionEnum::kExpose;
+      NotifyObservers();
+    }
   }
 };
 
-void Cell::PrintIndex() {
-  cout << index << ", ";
+void Cell::Notify(Cell *subject) {
+  switch (subject->notify_action_) {
+    case NotifyActionEnum::kPlantMine:
+      if (!is_mine_) {
+        ++integer_clue_;
+      }
+      break;
+    
+    case NotifyActionEnum::kExpose:
+      Expose();
+      break;
+  }
 };
+
+// void Cell::PrintIndex() {
+//   cout << index << ", ";
+// };
 
 void Cell::PlantMine() {
   is_mine_ = true;
   integer_clue_ = -1;
+  notify_action_ = NotifyActionEnum::kPlantMine;
   NotifyObservers();
 };

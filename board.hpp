@@ -7,7 +7,6 @@
 #include <unordered_map>
 #include <stdlib.h> 
 
-#include "subject.hpp"
 #include "cell.hpp"
 
 using namespace std;
