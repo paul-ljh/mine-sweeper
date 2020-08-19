@@ -15,8 +15,8 @@ const char Controller::kActionOptions[2] {'e', 'f'};
 Controller::Controller()
   : has_game_started_(false),
     action_('\0'),
-    x_coordinate_('\0'),
-    y_coordinate_('\0'),
+    row_('\0'),
+    column_('\0'),
     board_(nullptr),
     board_view_(nullptr) {};
 
@@ -61,12 +61,12 @@ void Controller::DispatchCommand(string command) {
         }
 
         else if (board_->VerifySingleCoordinate(command_char) == true) {
-          if (x_coordinate_ == '\0' and y_coordinate_ == '\0') {
-            x_coordinate_ = command_char;
+          if (row_ == '\0' and column_ == '\0') {
+            row_ = command_char;
             CoordinatePrompt();
           } else {
-            y_coordinate_ = command_char;
-            ActionResultEnum result = board_->ExecuteCommand(action_, x_coordinate_, y_coordinate_);
+            column_ = command_char;
+            ActionResultEnum result = board_->ExecuteCommand(action_, row_, column_);
             ActionResultDispatcher(result);
           }
         } else {
@@ -97,8 +97,8 @@ void Controller::ActionResultDispatcher(ActionResultEnum result) {
       board_view_->PrintGame();
       board_view_->ActionPrompt();
       action_ = '\0';
-      x_coordinate_ = '\0';
-      y_coordinate_ = '\0';
+      row_ = '\0';
+      column_ = '\0';
       break;
   }
 }
@@ -118,10 +118,10 @@ void Controller::StartGame(string difficulty_level) {
 };
 
 void Controller::CoordinatePrompt() {
-  if (x_coordinate_ == '\0' and y_coordinate_ == '\0') {
-    board_view_->XCoordinatePrompt();
+  if (row_ == '\0' and column_ == '\0') {
+    board_view_->RowPrompt();
   } else {
-    board_view_->YCoordinatePrompt();
+    board_view_->ColumnPrompt();
   }
 }
 

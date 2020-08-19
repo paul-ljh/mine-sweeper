@@ -3,8 +3,8 @@
 using namespace std;
 
 const string BoardView::kActionPrompt = "Please enter your action for the next move, e for expose or f for flag: ";
-const string BoardView::kXCoordinatePrompt = "Please enter the X coordinate of your next move: ";
-const string BoardView::kYCoordinatePrompt = "Please enter the Y coordinate of your next move: ";
+const string BoardView::kRowPrompt = "Please enter the Row Letter of your next move: ";
+const string BoardView::kColumnPrompt = "Please enter the Column Letter of your next move: ";
 const string BoardView::kGameDifficultyLevelPrompt =
   "Choose a difficulty level:\n"
   "l: Low\n"
@@ -38,11 +38,11 @@ void BoardView::ActionPrompt() {
   cout << kActionPrompt;
 };
 
-void BoardView::XCoordinatePrompt() {
-  cout << kXCoordinatePrompt;
+void BoardView::RowPrompt() {
+  cout << kRowPrompt;
 };
 
-void BoardView::YCoordinatePrompt() {
-  cout << kYCoordinatePrompt;
+void BoardView::ColumnPrompt() {
+  cout << kColumnPrompt;
 };
 

@@ -36,7 +36,7 @@ void Cell::PrintCell() {
   if (is_exposed_) {
     cout << integer_clue_;
   } else if (is_flagged_) {
-    cout << "f";
+    cout << "F";
   } else {
     cout << " ";
   }

@@ -175,11 +175,11 @@ bool Board::VerifySingleCoordinate(char coordinate) {
   return int(coordinate) >= int('a') and int(coordinate) < int('a' + board_size_);
 };
 
-ActionResultEnum Board::ExecuteCommand(char command, char x_coordinate, char y_coordinate) {
-  int x, y, index;
-  x = int(x_coordinate) - int('a');
-  y = int(y_coordinate) - int('a');
-  index = y * board_size_ + x;
+ActionResultEnum Board::ExecuteCommand(char command, char row, char column) {
+  int row_index, column_index, index;
+  row_index = int(row) - int('a');
+  column_index = int(column) - int('a');
+  index = row_index * board_size_ + column_index;
   return cells_[index]->ExecuteCommand(command);
 };
 

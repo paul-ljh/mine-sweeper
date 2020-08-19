@@ -13,8 +13,8 @@ using namespace std;
 class Controller {
   bool has_game_started_;
   char action_;
-  char x_coordinate_;
-  char y_coordinate_;
+  char row_;
+  char column_;
   Board* board_;
   BoardView* board_view_;
 

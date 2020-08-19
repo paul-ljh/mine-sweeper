@@ -11,8 +11,8 @@ class BoardView {
   Board* board_;
 
   static const string kActionPrompt;
-  static const string kXCoordinatePrompt;
-  static const string kYCoordinatePrompt;
+  static const string kRowPrompt;
+  static const string kColumnPrompt;
   static const string kGameDifficultyLevelPrompt;
 public: 
   BoardView();
@@ -24,8 +24,8 @@ public:
   void PrintGame();
   void ActionPrompt();
   void GameDifficultyLevelPrompt();
-  void XCoordinatePrompt();
-  void YCoordinatePrompt();
+  void RowPrompt();
+  void ColumnPrompt();
 };
 
 #endif
