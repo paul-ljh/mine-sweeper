@@ -14,6 +14,7 @@ class BoardView {
   static const string kRowPrompt;
   static const string kColumnPrompt;
   static const string kGameDifficultyLevelPrompt;
+  static const string kGameOverPrompt;
 public: 
   BoardView();
   BoardView(Board* board);
@@ -26,6 +27,9 @@ public:
   void GameDifficultyLevelPrompt();
   void RowPrompt();
   void ColumnPrompt();
+  void GameOverPrompt();
+
+  // void set_board(Board& other);
 };
 
 #endif

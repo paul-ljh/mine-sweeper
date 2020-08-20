@@ -23,6 +23,9 @@ class Controller {
   static const string kGameLevelOptions[3];
   static const char kActionOptions[2];
 
+  void ClearUserData();
+  void ClearGameData();
+
 public:
   Controller();
   ~Controller();
@@ -33,7 +36,7 @@ public:
   void StartGame(string difficulty_level);
   void PrintWelcomeMessage();
   void CoordinatePrompt();
-  void ActionResultDispatcher(ActionResultEnum result);
+  void ActionResultDispatcher();
 
   bool has_game_started() const;
   void set_has_game_started(bool new_val);

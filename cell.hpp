@@ -26,7 +26,7 @@ public:
 
   void Swap(Cell &other);
   void PlantMine();
-  void PrintCell();
+  void PrintCell(ActionResultEnum result);
   void Expose();
   ActionResultEnum ExecuteCommand(char command);
   void Notify(Cell *subject) override;

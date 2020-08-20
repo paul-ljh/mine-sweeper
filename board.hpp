@@ -17,11 +17,13 @@ class Board {
   int cells_count_;
   int total_bomb_count_;
   int remaining_bomb_count_;
-  int neighbour_index_differences_[8];
+  vector<int> neighbour_index_differences_;
   string top_bottom_border_;
-  string horizontal_border_indices_;
+  string horizontal_indices_border_;
   vector<Cell*> cells_;
+  ActionResultEnum last_action_result_;
   
+  static const string kHorizontalBorderIndent;
   static const string kHorizontalBorderSegment;
   static const char kVerticalBorderSegment;
   static const unordered_map<string, int> kGameLevelToSize;
@@ -41,9 +43,11 @@ public:
   void Swap(Board& other);
   void PrintBoard();
   bool VerifySingleCoordinate(char coordinate);
-  ActionResultEnum ExecuteCommand(char command, char x_coordinate, char y_coordinate);
+  void ExecuteCommand(char command, char x_coordinate, char y_coordinate);
 
   int board_size() const;
+  ActionResultEnum last_action_result() const;
+  string difficulty_level() const;
 };
 
 #endif

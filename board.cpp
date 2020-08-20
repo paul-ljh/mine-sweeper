@@ -1,5 +1,6 @@
 #include "board.hpp"
 
+const string Board::kHorizontalBorderIndent = "   ";
 const string Board::kHorizontalBorderSegment = "- ";
 const char Board::kVerticalBorderSegment = '|';
 const unordered_map<string, int> Board::kGameLevelToSize ({
@@ -19,8 +20,6 @@ Board::Board(string difficulty_level)
   : difficulty_level_(difficulty_level),
     board_size_(kGameLevelToSize.find(difficulty_level_)->second),
     cells_count_(board_size_ * board_size_),
-    horizontal_border_indices_("   "),
-    top_bottom_border_("   "),
     // TODO: extract this out into a member function for different levels of difficulty
     total_bomb_count_(rand() % cells_count_),
     remaining_bomb_count_(total_bomb_count_),
@@ -29,10 +28,13 @@ Board::Board(string difficulty_level)
       -board_size_, board_size_, // Up & Down
       -(board_size_ - 1), (board_size_ - 1), // Up-right & Down-left
       -(board_size_ + 1), (board_size_ + 1), // Up-left & Down-right
-    } {
+    },
+    horizontal_indices_border_(kHorizontalBorderIndent),
+    top_bottom_border_(kHorizontalBorderIndent),
+    last_action_result_(ActionResultEnum::kContinue) {
   for (int i = 0; i < board_size_; ++i) {
-    horizontal_border_indices_ += ('a' + i);
-    horizontal_border_indices_ += " ";
+    horizontal_indices_border_ += ('a' + i);
+    horizontal_indices_border_ += " ";
     top_bottom_border_ += kHorizontalBorderSegment;
   }
 
@@ -46,21 +48,29 @@ Board::Board(string difficulty_level)
 };
 
 Board::Board(const Board& other)
-  : board_size_(other.board_size_),
+  : difficulty_level_(other.difficulty_level_),
+    board_size_(other.board_size_),
     total_bomb_count_(other.total_bomb_count_),
     remaining_bomb_count_(other.remaining_bomb_count_),
+    neighbour_index_differences_(other.neighbour_index_differences_),
     top_bottom_border_(other.top_bottom_border_),
-    cells_(other.cells_) {
+    horizontal_indices_border_(other.horizontal_indices_border_),
+    cells_(other.cells_),
+    last_action_result_(other.last_action_result_) {
   cout << "Board copy constructor" << endl;
 };
 
 void Board::Swap(Board& other) {
   using std::swap;
+  swap(difficulty_level_, other.difficulty_level_);
   swap(board_size_, other.board_size_);
   swap(total_bomb_count_, other.total_bomb_count_);
   swap(remaining_bomb_count_, other.remaining_bomb_count_);
+  swap(neighbour_index_differences_, other.neighbour_index_differences_);
   swap(top_bottom_border_, other.top_bottom_border_);
+  swap(horizontal_indices_border_, other.horizontal_indices_border_);
   swap(cells_, other.cells_);
+  swap(last_action_result_, other.last_action_result_);
 };
 
 Board& Board::operator=(const Board& other) {
@@ -71,7 +81,7 @@ Board& Board::operator=(const Board& other) {
 };
 
 void Board::PrintBoard() {
-  cout << horizontal_border_indices_ << endl; // Indices
+  cout << horizontal_indices_border_ << endl; // Indices
   cout << top_bottom_border_ << endl; // Top
   PrintCells();
   cout << top_bottom_border_ << endl; // Bottom
@@ -82,7 +92,7 @@ void Board::PrintCells() {
     if (i % board_size_ == 0) {
       cout << char('a' + i / board_size_) << " " << kVerticalBorderSegment;
     }
-    cells_[i]->PrintCell();
+    cells_[i]->PrintCell(last_action_result_);
     if ((i + 1) % board_size_ == 0) {
       cout << kVerticalBorderSegment << endl;
     } else {
@@ -175,14 +185,22 @@ bool Board::VerifySingleCoordinate(char coordinate) {
   return int(coordinate) >= int('a') and int(coordinate) < int('a' + board_size_);
 };
 
-ActionResultEnum Board::ExecuteCommand(char command, char row, char column) {
+void Board::ExecuteCommand(char command, char row, char column) {
   int row_index, column_index, index;
   row_index = int(row) - int('a');
   column_index = int(column) - int('a');
   index = row_index * board_size_ + column_index;
-  return cells_[index]->ExecuteCommand(command);
+  last_action_result_ = cells_[index]->ExecuteCommand(command);
 };
 
 int Board::board_size() const {
   return board_size_;
 };
+
+ActionResultEnum Board::last_action_result() const {
+  return last_action_result_;
+}
+
+string Board::difficulty_level() const {
+  return difficulty_level_;
+}

@@ -32,14 +32,33 @@ void Cell::Swap(Cell &other) {
   swap(integer_clue_, other.integer_clue_);
 };
 
-void Cell::PrintCell() {
-  if (is_exposed_) {
-    cout << integer_clue_;
-  } else if (is_flagged_) {
-    cout << "F";
-  } else {
-    cout << " ";
+void Cell::PrintCell(ActionResultEnum result) {
+  switch (result) {
+    case ActionResultEnum::kGameOver:
+      if (is_mine_) {
+        cout << "*";
+      } else {
+        cout << integer_clue_;
+      }
+      break;
+    
+    case ActionResultEnum::kContinue:
+      if (is_exposed_) {
+        cout << integer_clue_;
+      } else if (is_flagged_) {
+        cout << "F";
+      } else {
+        cout << " ";
+      }
+      break;
   }
+  // if (is_exposed_) {
+  //   cout << integer_clue_;
+  // } else if (is_flagged_) {
+  //   cout << "F";
+  // } else {
+  //   cout << " ";
+  // }
   // if (is_flagged_) {
   //   cout << "F";
   // } else if (is_mine_) {

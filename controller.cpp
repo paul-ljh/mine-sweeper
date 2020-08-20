@@ -30,8 +30,8 @@ Controller::~Controller() {
 void Controller::DispatchCommand(string command) {
   // TODO: consider a map(string -> enum), then enum -> action via a switch statement
   if (command.compare("cheers") == 0) {
+    board_view_->GameDifficultyLevelPrompt();
     set_has_game_started(false);
-    LoadGame();
   } else {
     if (has_game_started_ == false) {
       if (find(kGameLevelOptions, kGameLevelOptions + 3, command) != kGameLevelOptions + 3) {
@@ -45,7 +45,10 @@ void Controller::DispatchCommand(string command) {
       }
     } else {
       if (command.compare("refresh") == 0) {
-        // TODO
+        // string prev_difficulty_level = board_->difficulty_level();
+        // ClearUserData();
+        // ClearGameData();
+        // StartGame(prev_difficulty_level);
       }
       
       else if (command.size() == 1) {
@@ -66,8 +69,8 @@ void Controller::DispatchCommand(string command) {
             CoordinatePrompt();
           } else {
             column_ = command_char;
-            ActionResultEnum result = board_->ExecuteCommand(action_, row_, column_);
-            ActionResultDispatcher(result);
+            board_->ExecuteCommand(action_, row_, column_);
+            ActionResultDispatcher();
           }
         } else {
           cout << "Choose a valid coordinate Merlin's Beard!\n" << endl;
@@ -76,44 +79,50 @@ void Controller::DispatchCommand(string command) {
       }
     }
   }
-  // refresh game (with same size n)
-
-  // quit game
-
-  /* action cmd with coordinate
-  flag, unflag, expose */    
+  // quit game 
 };
 
-void Controller::ActionResultDispatcher(ActionResultEnum result) {
-  switch (result) {
+void Controller::ActionResultDispatcher() {
+  switch (board_->last_action_result()) {
     case ActionResultEnum::kRepeat:
       cout << "You have swept this one already mate!" << endl;
 
     case ActionResultEnum::kGameOver:
-      cout << "GAME OVER!\nNice work my dear chap!" << endl;
+      board_view_->PrintGame();
+      board_view_->GameOverPrompt();
+      // TODO: destory Board and BoardView
       break;
     
     default:
       board_view_->PrintGame();
       board_view_->ActionPrompt();
-      action_ = '\0';
-      row_ = '\0';
-      column_ = '\0';
+      ClearUserData();
       break;
   }
 }
+
+void Controller::ClearUserData() {
+  action_ = '\0';
+  row_ = '\0';
+  column_ = '\0';
+}
+
+void Controller::ClearGameData() {
+  // board_ = Board();
+};
 
 void Controller::WelcomePrompt() {
   cout << kWelcomeMessage;
 };
 
-void Controller::LoadGame() {
-  board_view_->GameDifficultyLevelPrompt();
-};
+// void Controller::LoadGame() {
+//   board_view_.GameDifficultyLevelPrompt();
+// };
 
 void Controller::StartGame(string difficulty_level) {
   board_ = new Board(difficulty_level);
   board_view_ = new BoardView(board_);
+  // board_view_.set_board(board_);
   board_view_->PrintGame();
 };
 
