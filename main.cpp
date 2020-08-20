@@ -10,7 +10,7 @@ using namespace std;
 
 int main(int argc, char const *argv[]) {
   Controller game_controller;
-  game_controller.WelcomePrompt();
+  game_controller.Welcome();
   string command;
 
   while (true) {

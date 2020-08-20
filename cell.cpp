@@ -41,8 +41,8 @@ void Cell::PrintCell(ActionResultEnum result) {
         cout << integer_clue_;
       }
       break;
-    
-    case ActionResultEnum::kContinue:
+
+    default:
       if (is_exposed_) {
         cout << integer_clue_;
       } else if (is_flagged_) {
@@ -52,20 +52,6 @@ void Cell::PrintCell(ActionResultEnum result) {
       }
       break;
   }
-  // if (is_exposed_) {
-  //   cout << integer_clue_;
-  // } else if (is_flagged_) {
-  //   cout << "F";
-  // } else {
-  //   cout << " ";
-  // }
-  // if (is_flagged_) {
-  //   cout << "F";
-  // } else if (is_mine_) {
-  //   cout << "*";
-  // } else {
-  //   cout << integer_clue_;
-  // }
 };
 
 ActionResultEnum Cell::ExecuteCommand(char command) {

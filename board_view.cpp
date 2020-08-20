@@ -6,10 +6,10 @@ const string BoardView::kActionPrompt = "Please enter your action for the next m
 const string BoardView::kRowPrompt = "Please enter the Row Letter of your next move: ";
 const string BoardView::kColumnPrompt = "Please enter the Column Letter of your next move: ";
 const string BoardView::kGameDifficultyLevelPrompt =
-  "Choose a difficulty level:\n"
   "l: Low\n"
   "m: Intermidiate\n"
-  "h: High\n";
+  "h: High\n"
+  "Choose a difficulty level: ";
 const string BoardView::kGameOverPrompt = 
   "BOOM! GAME OVER!\n"
   "Nice work though my dear chap!\n\n"
@@ -18,6 +18,9 @@ const string BoardView::kGameOverPrompt =
   "'quit' to quit the game\n"
   "OR\n"
   "'refresh' to repeat the game\n";
+const string BoardView::kWelcomeMessage =
+  "Welcome to Minesweeper 2020 Corona Version\n"
+  "Type 'cheers' to continue or restart the game anytime\n";
 
 BoardView::BoardView() {};
 
@@ -39,7 +42,7 @@ void BoardView::PrintGame() {
 };
 
 void BoardView::GameDifficultyLevelPrompt() {
-  cout << kGameDifficultyLevelPrompt << endl;
+  cout << kGameDifficultyLevelPrompt;
 };
 
 void BoardView::ActionPrompt() {
@@ -57,6 +60,10 @@ void BoardView::ColumnPrompt() {
 void BoardView::GameOverPrompt() {
   cout << kGameOverPrompt;
 }
+
+void BoardView::WelcomePrompt() {
+  cout << kWelcomeMessage;
+};
 
 // void BoardView::set_board(Board& other) {
 //   board_ = other;
