@@ -30,6 +30,7 @@ Controller::~Controller() {
 void Controller::DispatchCommand(string command) {
   // TODO: consider a map(string -> enum), then enum -> action via a switch statement
   if (command.compare("cheers") == 0) {
+    ClearUserData();
     board_view_->GameDifficultyLevelPrompt();
     set_has_game_started(false);
   } else {
@@ -45,10 +46,11 @@ void Controller::DispatchCommand(string command) {
       }
     } else {
       if (command.compare("refresh") == 0) {
-        // string prev_difficulty_level = board_->difficulty_level();
-        // ClearUserData();
+        string prev_difficulty_level = board_->difficulty_level();
+        ClearUserData();
         // ClearGameData();
-        // StartGame(prev_difficulty_level);
+        StartGame(prev_difficulty_level);
+        board_view_->ActionPrompt();
       }
       
       else if (command.size() == 1) {
@@ -80,6 +82,7 @@ void Controller::DispatchCommand(string command) {
     }
   }
   // quit game 
+  // menu
 };
 
 void Controller::ActionResultDispatcher() {
