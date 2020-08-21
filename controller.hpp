@@ -22,14 +22,17 @@ class Controller {
   static const string kGameLevelOptions[3];
   static const char kActionOptions[2];
 
+  // TODO: make command a member var
   void DispatchInGameCommand(string command);
   void DispatchUserAction(char command_char);
+  void DispatchGameOverCommand(string command);
   void DispatchActionResult();
   void ProceedToChooseDifficulty();
   void ChooseDifficulty(string command);
-  void StartGame(string difficulty_level);
   void CoordinatePrompt();
   void ClearActionData();
+  void StartGame(string difficulty_level);
+  void RefreshGame();
 
 public:
   Controller();

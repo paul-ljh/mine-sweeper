@@ -43,7 +43,7 @@ bool Controller::DispatchCommand(string command) {
         break;
       
       case(GameStateEnum::kGameOver):
-        // TODO
+        DispatchGameOverCommand(command);
         break;
       
       case(GameStateEnum::kWin):
@@ -73,15 +73,14 @@ void Controller::ChooseDifficulty(string command) {
 // refresh, e, f, coordinate
 void Controller::DispatchInGameCommand(string command) {
   if (command.compare("refresh") == 0) {
-    string prev_difficulty_level = board_->difficulty_level();
-    ClearActionData();
-    StartGame(prev_difficulty_level);
-    board_view_->ActionPrompt();
-  }
-  
+    RefreshGame();
+  } 
   else if (command.size() == 1) {
     char command_char = command[0];
     DispatchUserAction(command_char);
+  }
+  else {
+    board_view_->AlienCommandPrompt();
   }
 };
 
@@ -133,10 +132,26 @@ void Controller::DispatchActionResult() {
   }
 }
 
+void Controller::DispatchGameOverCommand(string command) {
+  if (command.compare("refresh") == 0) {
+    RefreshGame();
+  } else {
+    board_view_->AlienCommandPrompt();
+  }
+}
+
 void Controller::ClearActionData() {
   action_ = '\0';
   row_ = '\0';
   column_ = '\0';
+}
+
+void Controller::RefreshGame() {
+  game_state_ = GameStateEnum::kInGame;
+  string prev_difficulty_level = board_->difficulty_level();
+  ClearActionData();
+  StartGame(prev_difficulty_level);
+  board_view_->ActionPrompt();
 }
 
 void Controller::StartGame(string difficulty_level) {

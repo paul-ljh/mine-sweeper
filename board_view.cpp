@@ -17,9 +17,9 @@ const string BoardView::kGameOverPrompt =
   "BOOM! GAME OVER!\n"
   "Nice work though my dear chap!\n\n"
   "Type:\n" 
-  "'cheers' to start a new game\n"
-  "'quit' to quit the game\n"
-  "'refresh' to repeat the game\n\n";
+  "'cheers' to select a different difficulty\n"
+  "'refresh' to repeat the game\n"
+  "'quit' to quit the game\n\n";
 
 const string BoardView::kWelcomeMessage =
   "Welcome to Minesweeper 2020 Corona Version\n"
