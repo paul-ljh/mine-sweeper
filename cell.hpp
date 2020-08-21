@@ -20,9 +20,6 @@ public:
   ~Cell();
   Cell(const Cell& other);
   Cell& operator=(const Cell& other);
-  
-  // TODO: remove all index related code, it's here for debugging purpose
-  int index;
 
   void Swap(Cell &other);
   void PlantMine();
@@ -30,7 +27,6 @@ public:
   void Expose();
   ActionResultEnum ExecuteCommand(char command);
   void Notify(Cell *subject) override;
-  // void PrintIndex() override;
 };
 
 #endif

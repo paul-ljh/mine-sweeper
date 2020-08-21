@@ -1,6 +1,6 @@
 #include "controller.hpp"
 
-enum class Controller::GameStateEnum {kInit, kChooseDifficulty, kInGame, kGameOver};
+enum class Controller::GameStateEnum {kInit, kChooseDifficulty, kInGame, kGameOver, kWin};
 const string Controller::kGameLevelOptions[3] {"l", "m", "h"};
 const char Controller::kActionOptions[2] {'e', 'f'};
 
@@ -17,24 +17,41 @@ Controller::~Controller() {
   delete board_view_;
 };
 
-void Controller::DispatchCommand(string command) {
-  switch(game_state_) {
-    case(GameStateEnum::kInit): 
-      if (command.compare("cheers") == 0) ProceedToChooseDifficulty();
-      break;
-    
-    case(GameStateEnum::kChooseDifficulty):
-      ChooseDifficulty(command);
-      break;
-
-    case(GameStateEnum::kInGame):
-      DispatchInGameCommand(command);
-      break;
-    
-    case(GameStateEnum::kGameOver):
-      // TODO
-      break;
+bool Controller::DispatchCommand(string command) {
+  if (command.compare("quit") == 0) {
+    return false;
+  } 
+  else if (command.compare("menu") == 0) {
+    board_view_->MenuPrompt();
   }
+  else if (command.compare("cheers") == 0) {
+    ClearActionData();
+    ProceedToChooseDifficulty();
+  }
+  else {
+    switch(game_state_) {
+      case(GameStateEnum::kInit):
+        board_view_->AlienCommandPrompt();
+        break;
+
+      case(GameStateEnum::kChooseDifficulty):
+        ChooseDifficulty(command);
+        break;
+
+      case(GameStateEnum::kInGame):
+        DispatchInGameCommand(command);
+        break;
+      
+      case(GameStateEnum::kGameOver):
+        // TODO
+        break;
+      
+      case(GameStateEnum::kWin):
+        // TODO
+        break;
+    }
+  }
+  return true;
 }
 
 void Controller::ProceedToChooseDifficulty() {
@@ -53,24 +70,13 @@ void Controller::ChooseDifficulty(string command) {
   }
 }
 
-// quit, menu, refresh, cheers, e, f, coordinate
+// refresh, e, f, coordinate
 void Controller::DispatchInGameCommand(string command) {
   if (command.compare("refresh") == 0) {
     string prev_difficulty_level = board_->difficulty_level();
     ClearActionData();
     StartGame(prev_difficulty_level);
     board_view_->ActionPrompt();
-  }
-
-  else if (command.compare("cheers") == 0) {
-    ClearActionData();
-    ProceedToChooseDifficulty();
-  }
-
-  else if (command.compare("menu") == 0) {
-  }
-
-  else if (command.compare("quit") == 0) {
   }
   
   else if (command.size() == 1) {
@@ -97,7 +103,7 @@ void Controller::DispatchUserAction(char command_char) {
     } else {
       column_ = command_char;
       board_->ExecuteCommand(action_, row_, column_);
-      ActionResultDispatcher();
+      DispatchActionResult();
     }
   }
   
@@ -107,7 +113,7 @@ void Controller::DispatchUserAction(char command_char) {
   }
 }
 
-void Controller::ActionResultDispatcher() {
+void Controller::DispatchActionResult() {
   switch (board_->last_action_result()) {
     case ActionResultEnum::kGameOver:
       game_state_ = GameStateEnum::kGameOver;
@@ -137,7 +143,7 @@ void Controller::StartGame(string difficulty_level) {
   board_ = new Board(difficulty_level);
   board_view_ = new BoardView(board_);
   board_view_->PrintGame();
-};
+}
 
 void Controller::CoordinatePrompt() {
   if (row_ == '\0' and column_ == '\0') {

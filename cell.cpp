@@ -7,8 +7,7 @@ Cell::Cell():
   is_flagged_(false),
   is_mine_(false),
   integer_clue_(0),
-  notify_action_(NotifyActionEnum::kPlantMine),
-  index(-1) {};
+  notify_action_(NotifyActionEnum::kPlantMine) {};
 
 Cell::~Cell() {};
 
@@ -16,7 +15,8 @@ Cell::Cell(const Cell& other):
   is_exposed_(other.is_exposed_),
   is_flagged_(other.is_flagged_),
   is_mine_(other.is_mine_),
-  integer_clue_(other.integer_clue_) {}
+  integer_clue_(other.integer_clue_),
+  notify_action_(other.notify_action_) {}
 
 Cell& Cell::operator=(const Cell& other) {
   Cell temp(other);
@@ -30,6 +30,7 @@ void Cell::Swap(Cell &other) {
   swap(is_flagged_, other.is_flagged_);
   swap(is_mine_, other.is_mine_);
   swap(integer_clue_, other.integer_clue_);
+  swap(notify_action_, other.notify_action_);
 };
 
 void Cell::PrintCell(ActionResultEnum result) {
@@ -96,10 +97,6 @@ void Cell::Notify(Cell *subject) {
       break;
   }
 };
-
-// void Cell::PrintIndex() {
-//   cout << index << ", ";
-// };
 
 void Cell::PlantMine() {
   is_mine_ = true;

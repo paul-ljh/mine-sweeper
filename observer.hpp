@@ -10,7 +10,6 @@ public:
   Observer() {};
   virtual ~Observer() {};
   virtual void Notify(T *subject) = 0;
-  // virtual void PrintIndex() = 0;
 };
 
 #endif

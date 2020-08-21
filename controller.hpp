@@ -22,19 +22,19 @@ class Controller {
   static const string kGameLevelOptions[3];
   static const char kActionOptions[2];
 
-  void ClearActionData();
-  void ChooseDifficulty(string command);
   void DispatchInGameCommand(string command);
   void DispatchUserAction(char command_char);
+  void DispatchActionResult();
   void ProceedToChooseDifficulty();
+  void ChooseDifficulty(string command);
   void StartGame(string difficulty_level);
   void CoordinatePrompt();
-  void ActionResultDispatcher();
+  void ClearActionData();
 
 public:
   Controller();
   ~Controller();
-  void DispatchCommand(string command);
+  bool DispatchCommand(string command);
   void Welcome();
 };
 

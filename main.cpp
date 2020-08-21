@@ -10,14 +10,17 @@ using namespace std;
 
 int main(int argc, char const *argv[]) {
   Controller game_controller;
-  game_controller.Welcome();
   string command;
+  bool result;
 
+  game_controller.Welcome();
   while (true) {
     cin >> command;
     cout << endl;
-    game_controller.DispatchCommand(command);
+    result = game_controller.DispatchCommand(command);
+    if (result == false) {
+      break;
+    }
   }
-  
   return 0;
 }

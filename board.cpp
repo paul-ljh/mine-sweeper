@@ -143,7 +143,6 @@ bool Board::ValidateNeighbourIndex(int self_index, int neighbour_index) {
 
 void Board::SetUpCellsRelations() {
   for (int i = 0; i < cells_.size(); i++) {
-    cells_[i]->index = i;
     for (int neighbour_index_diff : neighbour_index_differences_) {
       int neighbour_index = neighbour_index_diff + i;
       if (ValidateNeighbourIndex(i, neighbour_index)) {
@@ -170,15 +169,6 @@ void Board::GenerateMines() {
   for (int i = total_bomb_count_ - 1; i >= 0; i--) {
     swap(cells_[original_indices[i]], cells_[i]);
   }
-
-  // for (int i = 0; i < cells_.size(); i++) {
-  //   cells_[i]->PrintIndex();
-  //   cout << ": ";
-  //   for (auto o : cells_[i]->observers_) {
-  //     o->PrintIndex();
-  //   }
-  //   cout << endl;
-  // }
 };
 
 bool Board::VerifySingleCoordinate(char coordinate) {
