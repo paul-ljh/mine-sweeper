@@ -1,6 +1,7 @@
 #include "controller.hpp"
 
 enum class Controller::GameStateEnum {kInit, kChooseDifficulty, kInGame, kGameOver, kWin};
+// TODO: to char[]
 const string Controller::kGameLevelOptions[3] {"l", "m", "h"};
 const char Controller::kActionOptions[2] {'e', 'f'};
 
@@ -18,6 +19,7 @@ Controller::~Controller() {
 };
 
 bool Controller::DispatchCommand(string command) {
+  // quit, menu and cheers are accepted at all stages of game and will yield the same result
   if (command.compare("quit") == 0) {
     return false;
   } 
@@ -42,12 +44,12 @@ bool Controller::DispatchCommand(string command) {
         DispatchInGameCommand(command);
         break;
       
-      case(GameStateEnum::kGameOver):
-        DispatchGameOverCommand(command);
-        break;
-      
-      case(GameStateEnum::kWin):
-        // TODO
+      /*
+        default case covers GameStateEnum::kGameOver and GameStateEnum::kWin
+        because those 2 stages only accept refresh, in addition to global commands - menu, cheers, refresh
+      */
+      default:
+        DispatchGameOverOrWinCommand(command);
         break;
     }
   }
@@ -121,6 +123,11 @@ void Controller::DispatchActionResult() {
       board_view_->GameOverPrompt();
       break;
     
+    case ActionResultEnum::kWin:
+      game_state_ = GameStateEnum::kWin;
+      board_view_->GameWinPrompt();
+      break;
+
     case ActionResultEnum::kRepeat:
       cout << "You have swept this one already mate!\n" << endl;
 
@@ -132,7 +139,7 @@ void Controller::DispatchActionResult() {
   }
 }
 
-void Controller::DispatchGameOverCommand(string command) {
+void Controller::DispatchGameOverOrWinCommand(string command) {
   if (command.compare("refresh") == 0) {
     RefreshGame();
   } else {

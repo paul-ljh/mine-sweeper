@@ -21,8 +21,8 @@ Board::Board(string difficulty_level)
     board_size_(kGameLevelToSize.find(difficulty_level_)->second),
     cells_count_(board_size_ * board_size_),
     // TODO: extract this out into a member function for different levels of difficulty
+    // TODO: rand() doesn't seem to be truly random
     total_bomb_count_(rand() % cells_count_),
-    remaining_bomb_count_(total_bomb_count_),
     neighbour_index_differences_{
       -1, 1, // Left & Right
       -board_size_, board_size_, // Up & Down
@@ -38,6 +38,7 @@ Board::Board(string difficulty_level)
     top_bottom_border_ += kHorizontalBorderSegment;
   }
 
+  Cell::set_remaining_flags_count(total_bomb_count_);
   cells_.reserve(cells_count_);
   for (int i = 0; i < cells_count_; ++i) {
     cells_.push_back(new Cell());
@@ -51,21 +52,17 @@ Board::Board(const Board& other)
   : difficulty_level_(other.difficulty_level_),
     board_size_(other.board_size_),
     total_bomb_count_(other.total_bomb_count_),
-    remaining_bomb_count_(other.remaining_bomb_count_),
     neighbour_index_differences_(other.neighbour_index_differences_),
     top_bottom_border_(other.top_bottom_border_),
     horizontal_indices_border_(other.horizontal_indices_border_),
     cells_(other.cells_),
-    last_action_result_(other.last_action_result_) {
-  cout << "Board copy constructor" << endl;
-};
+    last_action_result_(other.last_action_result_) {};
 
 void Board::Swap(Board& other) {
   using std::swap;
   swap(difficulty_level_, other.difficulty_level_);
   swap(board_size_, other.board_size_);
   swap(total_bomb_count_, other.total_bomb_count_);
-  swap(remaining_bomb_count_, other.remaining_bomb_count_);
   swap(neighbour_index_differences_, other.neighbour_index_differences_);
   swap(top_bottom_border_, other.top_bottom_border_);
   swap(horizontal_indices_border_, other.horizontal_indices_border_);
@@ -74,7 +71,6 @@ void Board::Swap(Board& other) {
 };
 
 Board& Board::operator=(const Board& other) {
-  cout << "Board copy assignment" << endl;
   Board temp(other);
   Swap(temp);
   return *this;
@@ -181,6 +177,20 @@ void Board::ExecuteCommand(char command, char row, char column) {
   column_index = int(column) - int('a');
   index = row_index * board_size_ + column_index;
   last_action_result_ = cells_[index]->ExecuteCommand(command);
+
+  /*
+    This is a quicker way to determine whether one has won the game.
+    Since remaining_flags_count_ is initialized to equate total_bomb_count_,
+    therefore if remaining_flags_count_ == 0 meaning all flags are used,
+    and all other cells are exposed, then we know all flags match all mines one-on-one.
+  */
+  if (Cell::remaining_flags_count() == 0 && Cell::exposed_count() == cells_count_ - total_bomb_count_) {
+    last_action_result_ = ActionResultEnum::kWin;
+  }
+
+  // TODO: move this to View
+  cout << "flag count: " << Cell::remaining_flags_count() << endl;
+  cout << "exposed count: " << Cell::exposed_count() << endl;
 };
 
 int Board::board_size() const {

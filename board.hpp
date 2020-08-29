@@ -16,7 +16,6 @@ class Board {
   int board_size_;
   int cells_count_;
   int total_bomb_count_;
-  int remaining_bomb_count_;
   vector<int> neighbour_index_differences_;
   string top_bottom_border_;
   string horizontal_indices_border_;
@@ -44,6 +43,7 @@ public:
   void PrintBoard();
   bool VerifySingleCoordinate(char coordinate);
   void ExecuteCommand(char command, char x_coordinate, char y_coordinate);
+  void IncrementExposedCountBy1();
 
   int board_size() const;
   ActionResultEnum last_action_result() const;

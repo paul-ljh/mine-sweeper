@@ -14,6 +14,7 @@ class Controller {
   char action_;
   char row_;
   char column_;
+  // TODO: unique pointer?
   Board* board_;
   BoardView* board_view_;
   enum class GameStateEnum : int;
@@ -25,7 +26,7 @@ class Controller {
   // TODO: make command a member var
   void DispatchInGameCommand(string command);
   void DispatchUserAction(char command_char);
-  void DispatchGameOverCommand(string command);
+  void DispatchGameOverOrWinCommand(string command);
   void DispatchActionResult();
   void ProceedToChooseDifficulty();
   void ChooseDifficulty(string command);

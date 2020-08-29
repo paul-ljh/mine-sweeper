@@ -15,6 +15,8 @@ class Cell : public Observer<Cell>, public Subject<Cell> {
   int integer_clue_;
   enum class NotifyActionEnum : int;
   NotifyActionEnum notify_action_;
+  static int exposed_count_;
+  static int remaining_flags_count_;
 public:
   Cell();
   ~Cell();
@@ -27,6 +29,9 @@ public:
   void Expose();
   ActionResultEnum ExecuteCommand(char command);
   void Notify(Cell *subject) override;
+  static int exposed_count();
+  static int remaining_flags_count();
+  static void set_remaining_flags_count(int value);
 };
 
 #endif

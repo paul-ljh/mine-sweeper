@@ -21,6 +21,14 @@ const string BoardView::kGameOverPrompt =
   "'refresh' to repeat the game\n"
   "'quit' to quit the game\n\n";
 
+const string BoardView::kGameWinPrompt = 
+  "CONGRADULATIONS!\n"
+  "You have won!\n\n"
+  "Type:\n" 
+  "'cheers' to select a different difficulty\n"
+  "'refresh' to repeat the game\n"
+  "'quit' to quit the game\n\n";
+
 const string BoardView::kWelcomeMessage =
   "Welcome to Minesweeper 2020 Corona Version\n"
   "Type 'menu' anytime to see the control menu of the game\n"
@@ -83,5 +91,9 @@ void BoardView::MenuPrompt() {
 
 void BoardView::AlienCommandPrompt() {
   cout << kAlienCommandPrompt;
+}
+
+void BoardView::GameWinPrompt() {
+  cout << kGameWinPrompt;
 }
 

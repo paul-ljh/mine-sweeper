@@ -1,6 +1,8 @@
 #include "cell.hpp"
 
 enum class Cell::NotifyActionEnum {kPlantMine, kExpose};
+int Cell::exposed_count_ = 0;
+int Cell::remaining_flags_count_ = 0;
 
 Cell::Cell():
   is_exposed_(false),
@@ -68,19 +70,22 @@ ActionResultEnum Cell::ExecuteCommand(char command) {
       }
     } else /* flag action */ {
       is_flagged_ = !is_flagged_;
+      remaining_flags_count_ += (is_flagged_ ? -1 : 1);
       return ActionResultEnum::kFlag;
     }
   }
 };
 
 void Cell::Expose() {
-  if (!is_exposed_) {
-    is_flagged_ = false;
-    is_exposed_ = true;
-    if (integer_clue_ == 0) {
-      notify_action_ = NotifyActionEnum::kExpose;
-      NotifyObservers();
-    }
+  if (is_flagged_ == true) {
+    remaining_flags_count_++;
+  }
+  is_flagged_ = false;
+  is_exposed_ = true;
+  exposed_count_++;
+  if (integer_clue_ == 0) {
+    notify_action_ = NotifyActionEnum::kExpose;
+    NotifyObservers();
   }
 };
 
@@ -93,7 +98,7 @@ void Cell::Notify(Cell *subject) {
       break;
     
     case NotifyActionEnum::kExpose:
-      Expose();
+      if (!is_exposed_) Expose();
       break;
   }
 };
@@ -103,4 +108,16 @@ void Cell::PlantMine() {
   integer_clue_ = -1;
   notify_action_ = NotifyActionEnum::kPlantMine;
   NotifyObservers();
+};
+
+int Cell::exposed_count() {
+  return exposed_count_;
+};
+
+int Cell::remaining_flags_count() {
+  return remaining_flags_count_;
+};
+
+void Cell::set_remaining_flags_count(int value) {
+  Cell::remaining_flags_count_ = value;
 };

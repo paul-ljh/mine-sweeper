@@ -5,6 +5,7 @@ enum class ActionResultEnum : int {
   kRepeat, 
   kGameOver,
   kContinue,
+  kWin,
   kFlag,
 };
 
