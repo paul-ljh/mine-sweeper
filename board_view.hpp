@@ -21,7 +21,7 @@ class BoardView {
   static const string kAlienCommandPrompt;
   static const string kFlagCountPrompt;
 
-  void PrintFlagCounts();
+  void PrintFlagCounts() const;
 public:
   BoardView();
   BoardView(Board* board);
@@ -29,16 +29,16 @@ public:
   BoardView& operator= (const BoardView& other);
   ~BoardView();
 
-  void WelcomePrompt();
-  void ActionPrompt();
-  void GameDifficultyLevelPrompt();
-  void RowPrompt();
-  void ColumnPrompt();
-  void GameOverPrompt();
-  void MenuPrompt();
-  void AlienCommandPrompt();
-  void PrintGame();
-  void GameWinPrompt();
+  void WelcomePrompt() const;
+  void ActionPrompt() const;
+  void GameDifficultyLevelPrompt() const;
+  void RowPrompt() const;
+  void ColumnPrompt() const;
+  void GameOverPrompt() const;
+  void MenuPrompt() const;
+  void AlienCommandPrompt() const;
+  void PrintGame() const;
+  void GameWinPrompt() const;
 };
 
 #endif

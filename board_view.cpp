@@ -9,6 +9,7 @@ const string BoardView::kAlienCommandPrompt = "Sorry I don't understand this com
 const string BoardView::kFlagCountPrompt = "Flags Left: ";
 
 const string BoardView::kGameDifficultyLevelPrompt =
+  "\n"
   "l: Low\n"
   "m: Intermidiate\n"
   "h: High\n"
@@ -36,6 +37,7 @@ const string BoardView::kWelcomeMessage =
   "Type 'cheers' to continue\n\n";
 
 const string BoardView::kMenu =
+  "\n"
   "ACCEPTABLE AT ALL TIMES:\n"
   "'cheers': select game difficulty level\n"
   "'menu': see the control menu of the game\n"
@@ -58,48 +60,49 @@ BoardView& BoardView::operator=(const BoardView& other) {
 
 BoardView::~BoardView() {};
 
-void BoardView::PrintGame() {
+void BoardView::PrintGame() const {
   PrintFlagCounts();
   board_->PrintBoard();
 };
 
-void BoardView::GameDifficultyLevelPrompt() {
+void BoardView::GameDifficultyLevelPrompt() const {
   cout << kGameDifficultyLevelPrompt;
 };
 
-void BoardView::ActionPrompt() {
+void BoardView::ActionPrompt() const {
   cout << kActionPrompt;
 };
 
-void BoardView::RowPrompt() {
+void BoardView::RowPrompt() const {
   cout << kRowPrompt;
 };
 
-void BoardView::ColumnPrompt() {
+void BoardView::ColumnPrompt() const {
   cout << kColumnPrompt;
 };
 
-void BoardView::GameOverPrompt() {
+void BoardView::GameOverPrompt() const {
   cout << kGameOverPrompt;
 }
 
-void BoardView::WelcomePrompt() {
+void BoardView::WelcomePrompt() const {
   cout << kWelcomeMessage;
 };
 
-void BoardView::MenuPrompt() {
+void BoardView::MenuPrompt() const {
   cout << kMenu;
 }
 
-void BoardView::AlienCommandPrompt() {
+void BoardView::AlienCommandPrompt() const {
   cout << kAlienCommandPrompt;
 }
 
-void BoardView::GameWinPrompt() {
+void BoardView::GameWinPrompt() const {
   cout << kGameWinPrompt;
 }
 
-void BoardView::PrintFlagCounts() {
+void BoardView::PrintFlagCounts() const {
+  cout << endl;
   cout << kFlagCountPrompt;
   cout << Cell::remaining_flags_count();
   cout << endl;

@@ -181,8 +181,8 @@ void Board::ExecuteCommand(char command, char row, char column) {
   /*
     This is a quicker way to determine whether one has won the game.
     Since remaining_flags_count_ is initialized to equate total_bomb_count_,
-    therefore if remaining_flags_count_ == 0 meaning all flags are used,
-    and all other cells are exposed, then we know all flags match all mines one-on-one.
+    therefore, if remaining_flags_count_ == 0, meaning all flags are used and all other cells are exposed,
+    then we know all flags match all mines one-on-one.
   */
   if (Cell::remaining_flags_count() == 0 && Cell::exposed_count() == cells_count_ - total_bomb_count_) {
     last_action_result_ = ActionResultEnum::kWin;

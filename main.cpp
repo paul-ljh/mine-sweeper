@@ -16,7 +16,6 @@ int main(int argc, char const *argv[]) {
   game_controller.Welcome();
   while (true) {
     cin >> command;
-    cout << endl;
     result = game_controller.DispatchCommand(command);
     if (result == false) {
       break;
