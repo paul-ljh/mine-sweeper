@@ -22,7 +22,7 @@ bool Controller::DispatchCommand(string command) {
   // quit, menu and cheers are accepted at all stages of game and will yield the same result
   if (command.compare("quit") == 0) {
     return false;
-  } 
+  }
   else if (command.compare("menu") == 0) {
     board_view_->MenuPrompt();
   }
@@ -43,7 +43,7 @@ bool Controller::DispatchCommand(string command) {
       case(GameStateEnum::kInGame):
         DispatchInGameCommand(command);
         break;
-      
+
       /*
         default case covers GameStateEnum::kGameOver and GameStateEnum::kWin
         because those 2 stages only accept refresh, in addition to global commands - menu, cheers, refresh
@@ -76,7 +76,7 @@ void Controller::ChooseDifficulty(string command) {
 void Controller::DispatchInGameCommand(string command) {
   if (command.compare("refresh") == 0) {
     RefreshGame();
-  } 
+  }
   else if (command.size() == 1) {
     char command_char = command[0];
     DispatchUserAction(command_char);
@@ -107,7 +107,7 @@ void Controller::DispatchUserAction(char command_char) {
       DispatchActionResult();
     }
   }
-  
+
   else {
     cout << "Choose a valid coordinate Merlin's Beard!\n" << endl;
     CoordinatePrompt();
@@ -122,9 +122,10 @@ void Controller::DispatchActionResult() {
       board_view_->PrintGame();
       board_view_->GameOverPrompt();
       break;
-    
+
     case ActionResultEnum::kWin:
       game_state_ = GameStateEnum::kWin;
+      board_view_->PrintGame();
       board_view_->GameWinPrompt();
       break;
 

@@ -106,8 +106,8 @@ bool Board::ValidateNeighbourIndex(int self_index, int neighbour_index) {
     neighbour_index == self_index + (board_size_ - 1))
   ) {
     return false;
-  } 
-  
+  }
+
   // Last Column
   if (((self_index + 1) % board_size_ == 0) and (
     neighbour_index == self_index + 1 or
@@ -130,7 +130,7 @@ bool Board::ValidateNeighbourIndex(int self_index, int neighbour_index) {
   if ((self_index >= cells_count_ - board_size_ and self_index < cells_count_) and (
     neighbour_index == self_index + board_size_ or
     neighbour_index == self_index + (board_size_ + 1) or
-    neighbour_index == self_index + (board_size_ - 1)) 
+    neighbour_index == self_index + (board_size_ - 1))
   ) {
     return false;
   }
@@ -187,10 +187,6 @@ void Board::ExecuteCommand(char command, char row, char column) {
   if (Cell::remaining_flags_count() == 0 && Cell::exposed_count() == cells_count_ - total_bomb_count_) {
     last_action_result_ = ActionResultEnum::kWin;
   }
-
-  // TODO: move this to View
-  cout << "flag count: " << Cell::remaining_flags_count() << endl;
-  cout << "exposed count: " << Cell::exposed_count() << endl;
 };
 
 int Board::board_size() const {

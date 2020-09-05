@@ -6,6 +6,7 @@ const string BoardView::kActionPrompt = "Please enter your action for the next m
 const string BoardView::kRowPrompt = "Please enter the Row Letter of your next move: ";
 const string BoardView::kColumnPrompt = "Please enter the Column Letter of your next move: ";
 const string BoardView::kAlienCommandPrompt = "Sorry I don't understand this command\n\n";
+const string BoardView::kFlagCountPrompt = "Flags Left: ";
 
 const string BoardView::kGameDifficultyLevelPrompt =
   "l: Low\n"
@@ -13,18 +14,18 @@ const string BoardView::kGameDifficultyLevelPrompt =
   "h: High\n"
   "Choose a difficulty level: ";
 
-const string BoardView::kGameOverPrompt = 
+const string BoardView::kGameOverPrompt =
   "BOOM! GAME OVER!\n"
   "Nice work though my dear chap!\n\n"
-  "Type:\n" 
+  "Type:\n"
   "'cheers' to select a different difficulty\n"
   "'refresh' to repeat the game\n"
   "'quit' to quit the game\n\n";
 
-const string BoardView::kGameWinPrompt = 
+const string BoardView::kGameWinPrompt =
   "CONGRADULATIONS!\n"
   "You have won!\n\n"
-  "Type:\n" 
+  "Type:\n"
   "'cheers' to select a different difficulty\n"
   "'refresh' to repeat the game\n"
   "'quit' to quit the game\n\n";
@@ -58,6 +59,7 @@ BoardView& BoardView::operator=(const BoardView& other) {
 BoardView::~BoardView() {};
 
 void BoardView::PrintGame() {
+  PrintFlagCounts();
   board_->PrintBoard();
 };
 
@@ -97,3 +99,8 @@ void BoardView::GameWinPrompt() {
   cout << kGameWinPrompt;
 }
 
+void BoardView::PrintFlagCounts() {
+  cout << kFlagCountPrompt;
+  cout << Cell::remaining_flags_count();
+  cout << endl;
+}

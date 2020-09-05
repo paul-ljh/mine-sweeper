@@ -19,7 +19,10 @@ class BoardView {
   static const string kGameOverPrompt;
   static const string kGameWinPrompt;
   static const string kAlienCommandPrompt;
-public: 
+  static const string kFlagCountPrompt;
+
+  void PrintFlagCounts();
+public:
   BoardView();
   BoardView(Board* board);
   BoardView(const BoardView& other);

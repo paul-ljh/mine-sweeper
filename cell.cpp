@@ -38,6 +38,7 @@ void Cell::Swap(Cell &other) {
 void Cell::PrintCell(ActionResultEnum result) {
   switch (result) {
     case ActionResultEnum::kGameOver:
+    case ActionResultEnum::kWin:
       if (is_mine_) {
         cout << "*";
       } else {
@@ -96,7 +97,7 @@ void Cell::Notify(Cell *subject) {
         ++integer_clue_;
       }
       break;
-    
+
     case NotifyActionEnum::kExpose:
       if (!is_exposed_) Expose();
       break;
