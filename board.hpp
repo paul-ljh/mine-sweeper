@@ -25,7 +25,8 @@ class Board {
   static const string kHorizontalBorderIndent;
   static const string kHorizontalBorderSegment;
   static const char kVerticalBorderSegment;
-  static const unordered_map<char, int> kGameLevelToSize;
+  static const unordered_map<char, int> kGameLevelToBoardSize;
+  static const unordered_map<char, int> kGameLevelToBombCount;
 
   void PrintCells();
   void GenerateMines();

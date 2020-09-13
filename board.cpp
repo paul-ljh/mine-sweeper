@@ -3,10 +3,15 @@
 const string Board::kHorizontalBorderIndent = "   ";
 const string Board::kHorizontalBorderSegment = "- ";
 const char Board::kVerticalBorderSegment = '|';
-const unordered_map<char, int> Board::kGameLevelToSize ({
+const unordered_map<char, int> Board::kGameLevelToBoardSize ({
   {'l', 10},
   {'m', 20},
   {'h', 26},
+});
+const unordered_map<char, int> Board::kGameLevelToBombCount ({
+  {'l', 15},
+  {'m', 25},
+  {'h', 32},
 });
 
 Board::Board() {};
@@ -18,11 +23,10 @@ Board::~Board() {
 
 Board::Board(char difficulty_level)
   : difficulty_level_(difficulty_level),
-    board_size_(kGameLevelToSize.find(difficulty_level_)->second),
+    board_size_(kGameLevelToBoardSize.find(difficulty_level_)->second),
     cells_count_(board_size_ * board_size_),
-    // TODO: extract this out into a member function for different levels of difficulty
-    // TODO: rand() doesn't seem to be truly random
-    total_bomb_count_(rand() % cells_count_),
+    // TODO: rand() is pseudo-random
+    total_bomb_count_(kGameLevelToBombCount.find(difficulty_level_)->second),
     neighbour_index_differences_{
       -1, 1, // Left & Right
       -board_size_, board_size_, // Up & Down
