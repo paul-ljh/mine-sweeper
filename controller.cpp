@@ -1,8 +1,7 @@
 #include "controller.hpp"
 
 enum class Controller::GameStateEnum {kInit, kChooseDifficulty, kInGame, kGameOver, kWin};
-// TODO: to char[]
-const string Controller::kGameLevelOptions[3] {"l", "m", "h"};
+const char Controller::kGameLevelOptions[3] {'l', 'm', 'h'};
 const char Controller::kActionOptions[2] {'e', 'f'};
 
 Controller::Controller()
@@ -62,13 +61,14 @@ void Controller::ProceedToChooseDifficulty() {
 }
 
 void Controller::ChooseDifficulty(string command) {
-  if (find(kGameLevelOptions, kGameLevelOptions + 3, command) != kGameLevelOptions + 3) {
+  if (command.length() > 1) {
+    cout << "Choose a valid game level for God's teeth!\n" << endl;
+    board_view_->GameDifficultyLevelPrompt();
+  }
+  else if (find(kGameLevelOptions, kGameLevelOptions + 3, command[0]) != kGameLevelOptions + 3) {
     game_state_ = GameStateEnum::kInGame;
     StartGame(command);
     board_view_->ActionPrompt();
-  } else {
-    cout << "Choose a valid game level for God's teeth!\n" << endl;
-    board_view_->GameDifficultyLevelPrompt();
   }
 }
 

@@ -20,7 +20,7 @@ class Controller {
   enum class GameStateEnum : int;
   GameStateEnum game_state_;
 
-  static const string kGameLevelOptions[3];
+  static const char kGameLevelOptions[3];
   static const char kActionOptions[2];
 
   // TODO: make command a member var
