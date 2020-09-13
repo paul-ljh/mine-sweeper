@@ -32,7 +32,7 @@ class Controller {
   void ChooseDifficulty(string command);
   void CoordinatePrompt();
   void ClearActionData();
-  void StartGame(string difficulty_level);
+  void StartGame(char difficulty_level);
   void RefreshGame();
 
 public:

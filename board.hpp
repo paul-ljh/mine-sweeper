@@ -5,14 +5,14 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
-#include <stdlib.h> 
+#include <stdlib.h>
 
 #include "cell.hpp"
 
 using namespace std;
 
 class Board {
-  string difficulty_level_;
+  char difficulty_level_;
   int board_size_;
   int cells_count_;
   int total_bomb_count_;
@@ -21,11 +21,11 @@ class Board {
   string horizontal_indices_border_;
   vector<Cell*> cells_;
   ActionResultEnum last_action_result_;
-  
+
   static const string kHorizontalBorderIndent;
   static const string kHorizontalBorderSegment;
   static const char kVerticalBorderSegment;
-  static const unordered_map<string, int> kGameLevelToSize;
+  static const unordered_map<char, int> kGameLevelToSize;
 
   void PrintCells();
   void GenerateMines();
@@ -34,7 +34,7 @@ class Board {
 
 public:
   Board();
-  Board(string difficulty_level);
+  Board(char difficulty_level);
   Board(const Board& other);
   Board& operator= (const Board& other);
   ~Board();
@@ -47,7 +47,7 @@ public:
 
   int board_size() const;
   ActionResultEnum last_action_result() const;
-  string difficulty_level() const;
+  char difficulty_level() const;
 };
 
 #endif

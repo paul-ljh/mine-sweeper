@@ -67,7 +67,7 @@ void Controller::ChooseDifficulty(string command) {
   }
   else if (find(kGameLevelOptions, kGameLevelOptions + 3, command[0]) != kGameLevelOptions + 3) {
     game_state_ = GameStateEnum::kInGame;
-    StartGame(command);
+    StartGame(command[0]);
     board_view_->ActionPrompt();
   }
 }
@@ -156,13 +156,13 @@ void Controller::ClearActionData() {
 
 void Controller::RefreshGame() {
   game_state_ = GameStateEnum::kInGame;
-  string prev_difficulty_level = board_->difficulty_level();
+  char prev_difficulty_level = board_->difficulty_level();
   ClearActionData();
   StartGame(prev_difficulty_level);
   board_view_->ActionPrompt();
 }
 
-void Controller::StartGame(string difficulty_level) {
+void Controller::StartGame(char difficulty_level) {
   board_ = new Board(difficulty_level);
   board_view_ = new BoardView(board_);
   board_view_->PrintGame();

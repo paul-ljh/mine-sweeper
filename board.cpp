@@ -3,10 +3,10 @@
 const string Board::kHorizontalBorderIndent = "   ";
 const string Board::kHorizontalBorderSegment = "- ";
 const char Board::kVerticalBorderSegment = '|';
-const unordered_map<string, int> Board::kGameLevelToSize ({
-  {"l", 10},
-  {"m", 20},
-  {"h", 26},
+const unordered_map<char, int> Board::kGameLevelToSize ({
+  {'l', 10},
+  {'m', 20},
+  {'h', 26},
 });
 
 Board::Board() {};
@@ -16,7 +16,7 @@ Board::~Board() {
   }
 };
 
-Board::Board(string difficulty_level)
+Board::Board(char difficulty_level)
   : difficulty_level_(difficulty_level),
     board_size_(kGameLevelToSize.find(difficulty_level_)->second),
     cells_count_(board_size_ * board_size_),
@@ -197,6 +197,6 @@ ActionResultEnum Board::last_action_result() const {
   return last_action_result_;
 }
 
-string Board::difficulty_level() const {
+char Board::difficulty_level() const {
   return difficulty_level_;
 }
