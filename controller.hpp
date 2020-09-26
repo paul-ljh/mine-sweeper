@@ -11,6 +11,7 @@
 using namespace std;
 
 class Controller {
+  string last_command_;
   char action_;
   char row_;
   char column_;
@@ -23,13 +24,12 @@ class Controller {
   static const char kGameLevelOptions[3];
   static const char kActionOptions[2];
 
-  // TODO: make command a member var
-  void DispatchInGameCommand(string command);
-  void DispatchUserAction(char command_char);
-  void DispatchGameOverOrWinCommand(string command);
+  void DispatchInGameCommand();
+  void DispatchUserAction();
+  void DispatchGameOverOrWinCommand();
   void DispatchActionResult();
   void ProceedToChooseDifficulty();
-  void ChooseDifficulty(string command);
+  void ChooseDifficulty();
   void CoordinatePrompt();
   void ClearActionData();
   void StartGame(char difficulty_level);

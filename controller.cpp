@@ -5,7 +5,8 @@ const char Controller::kGameLevelOptions[3] {'l', 'm', 'h'};
 const char Controller::kActionOptions[2] {'e', 'f'};
 
 Controller::Controller()
-  : action_('\0'),
+  : last_command_(""),
+    action_('\0'),
     row_('\0'),
     column_('\0'),
     board_(nullptr),
@@ -18,14 +19,16 @@ Controller::~Controller() {
 };
 
 bool Controller::DispatchCommand(string command) {
+  last_command_ = command;
+
   // quit, menu and cheers are accepted at all stages of game and will yield the same result
-  if (command.compare("quit") == 0) {
+  if (last_command_.compare("quit") == 0) {
     return false;
   }
-  else if (command.compare("menu") == 0) {
+  else if (last_command_.compare("menu") == 0) {
     board_view_->MenuPrompt();
   }
-  else if (command.compare("cheers") == 0) {
+  else if (last_command_.compare("cheers") == 0) {
     ClearActionData();
     ProceedToChooseDifficulty();
   }
@@ -36,11 +39,11 @@ bool Controller::DispatchCommand(string command) {
         break;
 
       case(GameStateEnum::kChooseDifficulty):
-        ChooseDifficulty(command);
+        ChooseDifficulty();
         break;
 
       case(GameStateEnum::kInGame):
-        DispatchInGameCommand(command);
+        DispatchInGameCommand();
         break;
 
       /*
@@ -48,7 +51,7 @@ bool Controller::DispatchCommand(string command) {
         because those 2 stages only accept refresh, in addition to global commands - menu, cheers, refresh
       */
       default:
-        DispatchGameOverOrWinCommand(command);
+        DispatchGameOverOrWinCommand();
         break;
     }
   }
@@ -60,33 +63,33 @@ void Controller::ProceedToChooseDifficulty() {
   board_view_->GameDifficultyLevelPrompt();
 }
 
-void Controller::ChooseDifficulty(string command) {
-  if (command.length() > 1) {
+void Controller::ChooseDifficulty() {
+  if (last_command_.length() > 1) {
     cout << "Choose a valid game level for God's teeth!\n" << endl;
     board_view_->GameDifficultyLevelPrompt();
   }
-  else if (find(kGameLevelOptions, kGameLevelOptions + 3, command[0]) != kGameLevelOptions + 3) {
+  else if (find(kGameLevelOptions, kGameLevelOptions + 3, last_command_[0]) != kGameLevelOptions + 3) {
     game_state_ = GameStateEnum::kInGame;
-    StartGame(command[0]);
+    StartGame(last_command_[0]);
     board_view_->ActionPrompt();
   }
 }
 
 // refresh, e, f, coordinate
-void Controller::DispatchInGameCommand(string command) {
-  if (command.compare("refresh") == 0) {
+void Controller::DispatchInGameCommand() {
+  if (last_command_.compare("refresh") == 0) {
     RefreshGame();
   }
-  else if (command.size() == 1) {
-    char command_char = command[0];
-    DispatchUserAction(command_char);
+  else if (last_command_.size() == 1) {
+    DispatchUserAction();
   }
   else {
     board_view_->AlienCommandPrompt();
   }
 };
 
-void Controller::DispatchUserAction(char command_char) {
+void Controller::DispatchUserAction() {
+  char command_char = last_command_[0];
   if (action_ == '\0') {
     if (find(kActionOptions, kActionOptions + 2, command_char) != kActionOptions + 2) {
       action_ = command_char;
@@ -140,8 +143,8 @@ void Controller::DispatchActionResult() {
   }
 }
 
-void Controller::DispatchGameOverOrWinCommand(string command) {
-  if (command.compare("refresh") == 0) {
+void Controller::DispatchGameOverOrWinCommand() {
+  if (last_command_.compare("refresh") == 0) {
     RefreshGame();
   } else {
     board_view_->AlienCommandPrompt();

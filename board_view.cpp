@@ -1,6 +1,6 @@
 #include "board_view.hpp"
 
-const string BoardView::kActionPrompt = "Please enter your action for the next move, e for expose or f for flag: ";
+const string BoardView::kActionPrompt = "Please enter your action for the next move, e for expose or f for flag/unflag: ";
 const string BoardView::kRowPrompt = "Please enter the Row Letter of your next move: ";
 const string BoardView::kColumnPrompt = "Please enter the Column Letter of your next move: ";
 const string BoardView::kAlienCommandPrompt = "Sorry I don't understand this command\n\n";
