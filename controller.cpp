@@ -35,7 +35,7 @@ bool Controller::DispatchCommand(string command) {
   else {
     switch(game_state_) {
       case(GameStateEnum::kInit):
-        board_view_->AlienCommandPrompt();
+        board_view_->WarningPrompt(WarningPromptEnum::kInvalidCommand);
         break;
 
       case(GameStateEnum::kChooseDifficulty):
@@ -64,18 +64,18 @@ void Controller::ProceedToChooseDifficulty() {
 }
 
 void Controller::ChooseDifficulty() {
-  if (last_command_.length() > 1) {
-    cout << "Choose a valid game level for God's teeth!\n" << endl;
-    board_view_->GameDifficultyLevelPrompt();
-  }
-  else if (find(kGameLevelOptions, kGameLevelOptions + 3, last_command_[0]) != kGameLevelOptions + 3) {
+  if (last_command_.size() == 1 and find(kGameLevelOptions, kGameLevelOptions + 3, last_command_[0]) != kGameLevelOptions + 3) {
     game_state_ = GameStateEnum::kInGame;
     StartGame(last_command_[0]);
     board_view_->ActionPrompt();
   }
+  else {
+    board_view_->WarningPrompt(WarningPromptEnum::kInvalidDifficultyLevel);
+    board_view_->GameDifficultyLevelPrompt();
+  }
 }
 
-// refresh, e, f, coordinate
+// refresh, e, f, coordinate (1 character)
 void Controller::DispatchInGameCommand() {
   if (last_command_.compare("refresh") == 0) {
     RefreshGame();
@@ -84,7 +84,7 @@ void Controller::DispatchInGameCommand() {
     DispatchUserAction();
   }
   else {
-    board_view_->AlienCommandPrompt();
+    board_view_->WarningPrompt(WarningPromptEnum::kInvalidCommand);
   }
 };
 
@@ -95,7 +95,7 @@ void Controller::DispatchUserAction() {
       action_ = command_char;
       CoordinatePrompt();
     } else {
-      cout << "Choose a valid action God Save the Queen!\n";
+      board_view_->WarningPrompt(WarningPromptEnum::kInvalidUserAction);
       board_view_->ActionPrompt();
     }
   }
@@ -112,7 +112,7 @@ void Controller::DispatchUserAction() {
   }
 
   else {
-    cout << "Choose a valid coordinate Merlin's Beard!\n" << endl;
+    board_view_->WarningPrompt(WarningPromptEnum::kInvalidCoordinate);
     CoordinatePrompt();
   }
 }
@@ -133,7 +133,8 @@ void Controller::DispatchActionResult() {
       break;
 
     case ActionResultEnum::kRepeat:
-      cout << "You have swept this one already mate!\n" << endl;
+      board_view_->WarningPrompt(WarningPromptEnum::kRepeatedPosition);
+      // NO break statement here becuz we want to execute the default actions after an repeated action
 
     default:
       ClearActionData();
@@ -147,7 +148,7 @@ void Controller::DispatchGameOverOrWinCommand() {
   if (last_command_.compare("refresh") == 0) {
     RefreshGame();
   } else {
-    board_view_->AlienCommandPrompt();
+    board_view_->WarningPrompt(WarningPromptEnum::kInvalidCommand);
   }
 }
 

@@ -3,8 +3,13 @@
 const string BoardView::kActionPrompt = "Please enter your action for the next move, e for expose or f for flag/unflag: ";
 const string BoardView::kRowPrompt = "Please enter the Row Letter of your next move: ";
 const string BoardView::kColumnPrompt = "Please enter the Column Letter of your next move: ";
-const string BoardView::kAlienCommandPrompt = "Sorry I don't understand this command\n\n";
 const string BoardView::kFlagCountPrompt = "Flags Left: ";
+
+const string BoardView::kRepeatedPositionPrompt = "You have swept this one already mate!\n\n";
+const string BoardView::kInvalidCommandPrompt = "Sorry I don't understand this command\n\n";
+const string BoardView::kInvalidDifficultyLevelPrompt = "Choose a valid game level for God's teeth!\n\n";
+const string BoardView::kInvalidUserActionPrompt = "Choose a valid action God Save the Queen!\n\n";
+const string BoardView::kInvalidCoordinatePrompt = "Choose a valid coordinate Merlin's Beard!\n\n";
 
 const string BoardView::kGameDifficultyLevelPrompt =
   "\n"
@@ -58,6 +63,30 @@ BoardView& BoardView::operator=(const BoardView& other) {
 
 BoardView::~BoardView() {};
 
+void BoardView::WarningPrompt(WarningPromptEnum which_warning) const {
+  switch (which_warning) {
+    case WarningPromptEnum::kRepeatedPosition:
+      cout << kRepeatedPositionPrompt;
+      break;
+
+    case WarningPromptEnum::kInvalidCommand:
+      cout << kInvalidCommandPrompt;
+      break;
+
+    case WarningPromptEnum::kInvalidDifficultyLevel:
+      cout << kInvalidDifficultyLevelPrompt;
+      break;
+
+    case WarningPromptEnum::kInvalidUserAction:
+      cout << kInvalidUserActionPrompt;
+      break;
+
+    case WarningPromptEnum::kInvalidCoordinate:
+      cout << kInvalidCoordinatePrompt;
+      break;
+  }
+};
+
 void BoardView::PrintGame() const {
   PrintFlagCounts();
   board_->PrintBoard();
@@ -89,10 +118,6 @@ void BoardView::WelcomePrompt() const {
 
 void BoardView::MenuPrompt() const {
   cout << kMenu;
-}
-
-void BoardView::AlienCommandPrompt() const {
-  cout << kAlienCommandPrompt;
 }
 
 void BoardView::GameWinPrompt() const {

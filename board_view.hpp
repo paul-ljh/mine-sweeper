@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "board.hpp"
+#include "warning_prompt_enum.hpp"
 
 using namespace std;
 
@@ -18,8 +19,13 @@ class BoardView {
   static const string kGameDifficultyLevelPrompt;
   static const string kGameOverPrompt;
   static const string kGameWinPrompt;
-  static const string kAlienCommandPrompt;
   static const string kFlagCountPrompt;
+
+  static const string kRepeatedPositionPrompt;
+  static const string kInvalidCommandPrompt;
+  static const string kInvalidDifficultyLevelPrompt;
+  static const string kInvalidUserActionPrompt;
+  static const string kInvalidCoordinatePrompt;
 
   void PrintFlagCounts() const;
 public:
@@ -29,6 +35,8 @@ public:
   BoardView& operator= (const BoardView& other);
   ~BoardView();
 
+  void WarningPrompt(WarningPromptEnum which_warning) const;
+
   void WelcomePrompt() const;
   void ActionPrompt() const;
   void GameDifficultyLevelPrompt() const;
@@ -36,7 +44,6 @@ public:
   void ColumnPrompt() const;
   void GameOverPrompt() const;
   void MenuPrompt() const;
-  void AlienCommandPrompt() const;
   void PrintGame() const;
   void GameWinPrompt() const;
 };
