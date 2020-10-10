@@ -15,7 +15,6 @@ Controller::Controller()
 
 Controller::~Controller() {
   delete board_;
-  delete board_view_;
 };
 
 bool Controller::DispatchCommand(string command) {
@@ -168,7 +167,8 @@ void Controller::RefreshGame() {
 
 void Controller::StartGame(char difficulty_level) {
   board_ = new Board(difficulty_level);
-  board_view_ = new BoardView(board_);
+  unique_ptr<BoardView> new_boardview(new BoardView(board_));
+  board_view_ = move(new_boardview);
   board_view_->PrintGame();
 }
 

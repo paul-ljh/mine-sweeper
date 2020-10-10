@@ -15,9 +15,9 @@ class Controller {
   char action_;
   char row_;
   char column_;
-  // TODO: unique pointer?
+  // TODO: shared pointer?
   Board* board_;
-  BoardView* board_view_;
+  unique_ptr<BoardView> board_view_;
   enum class GameStateEnum : int;
   GameStateEnum game_state_;
 
