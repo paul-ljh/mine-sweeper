@@ -50,7 +50,7 @@ const string BoardView::kMenu =
 
 BoardView::BoardView() {};
 
-BoardView::BoardView(Board* board): board_(board) {};
+BoardView::BoardView(shared_ptr<Board> board): board_(board) {};
 
 BoardView::BoardView(const BoardView& other): board_(other.board_) {};
 

@@ -9,7 +9,7 @@
 using namespace std;
 
 class BoardView {
-  Board* board_;
+  shared_ptr<Board> board_;
 
   static const string kWelcomeMessage;
   static const string kMenu;
@@ -30,7 +30,7 @@ class BoardView {
   void PrintFlagCounts() const;
 public:
   BoardView();
-  BoardView(Board* board);
+  BoardView(shared_ptr<Board> board);
   BoardView(const BoardView& other);
   BoardView& operator= (const BoardView& other);
   ~BoardView();

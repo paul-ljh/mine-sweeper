@@ -13,9 +13,7 @@ Controller::Controller()
     board_view_(nullptr),
     game_state_(GameStateEnum::kInit) {};
 
-Controller::~Controller() {
-  delete board_;
-};
+Controller::~Controller() {};
 
 bool Controller::DispatchCommand(string command) {
   last_command_ = command;
@@ -166,7 +164,7 @@ void Controller::RefreshGame() {
 }
 
 void Controller::StartGame(char difficulty_level) {
-  board_ = new Board(difficulty_level);
+  board_ = shared_ptr<Board>(new Board(difficulty_level));
   unique_ptr<BoardView> new_boardview(new BoardView(board_));
   board_view_ = move(new_boardview);
   board_view_->PrintGame();
